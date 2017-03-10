@@ -14,10 +14,10 @@ if "__main__" == __name__:
         }
     }
 
-    cherrypy.tree.mount(page_setup.main(), "/", conf)
-    cherrypy.tree.mount(page_setup.dex(), "/dex", conf)
-    cherrypy.tree.mount(page_setup.calc(), "/calc", conf)
-    cherrypy.tree.mount(page_setup.gym_leaders(), "/gyms", conf)
+    cherrypy.tree.mount(view.main(), "/", conf)
+    cherrypy.tree.mount(view.dex(), "/dex", conf)
+    cherrypy.tree.mount(view.calc(), "/calc", conf)
+    cherrypy.tree.mount(view.gym_leaders(), "/gyms", conf)
 
     if len(sys.argv) > 1:
         if sys.argv[1] == "True":

@@ -1,4 +1,4 @@
-import os, cherrypy, setup, sys, random, re, smtplib, string
+import os, cherrypy, sys, re, smtplib, string
 from Tkinter import Image
 from jinja2 import Template, Environment, FileSystemLoader
 from datetime import date
@@ -10,8 +10,6 @@ sys.setdefaultencoding("utf-8")
 
 
 from pymongo import MongoClient
-
-
 
 class dex():
     def dexKey(self, pkmn):
@@ -64,10 +62,134 @@ class calc():
     def index(self):
         return setup.env.get_template("calc_page.html").render()
 
+class gym_leaders():
     @cherrypy.expose
     def index(self):
-        return setup.env.get_template("draft_tool_page.html").render(counters=self.counters)
+        gym_leaders=[
+            {'name': 'Claire', 'name_lower': 'claire', 'pokemon': [
+                {'name' : 'Jolteon', 'src': '/static/sprites/135.gif', 'kdr' : 'unknown'},
+                {'name' : 'Rotom-W', 'src': '/static/sprites/479-wash.gif', 'kdr' : 'unknown'},
+                {'name' : 'Eelektross', 'src': '/static/sprites/604.gif', 'kdr' : 'unknown'},
+                {'name' : 'Galvantula', 'src': '/static/sprites/596.gif', 'kdr' : 'unknown'},
+                {'name' : 'Electivire', 'src': '/static/sprites/466.gif', 'kdr' : 'unknown'},
+                {'name' : 'Magnezone', 'src': '/static/sprites/462.gif', 'kdr' : 'unknown'},
+                {'name' : 'Heliolisk', 'src': '/static/sprites/695.gif', 'kdr' : 'unknown'},
+                {'name' : 'Manectric', 'src': '/static/sprites/310.gif', 'kdr' : 'unknown'},
+                {'name' : 'Zapdos', 'src': '/static/sprites/145.gif', 'kdr' : 'unknown'}
+            ]},
+            {'name': 'Shayda', 'name_lower': 'shayda', 'pokemon': [
+                {'name' : 'Charizard', 'src': '/static/sprites/6-mega-y.gif', 'kdr' : 'unknown'},
+                {'name' : 'Gliscor', 'src': '/static/sprites/472.gif', 'kdr' : 'unknown'},
+                {'name' : 'Togekiss', 'src': '/static/sprites/468.gif', 'kdr' : 'unknown'},
+                {'name' : 'Hawlucha', 'src': '/static/sprites/701.gif', 'kdr' : 'unknown'},
+                {'name' : 'Gyarados', 'src': '/static/sprites/130.gif', 'kdr' : 'unknown'},
+                {'name' : 'Talonflame', 'src': '/static/sprites/663.gif', 'kdr' : 'unknown'},
+                {'name' : 'Dragonite', 'src': '/static/sprites/149.gif', 'kdr' : 'unknown'},
+                {'name' : 'Skarmory', 'src': '/static/sprites/227.gif', 'kdr' : 'unknown'},
+                {'name' : 'Zapdos', 'src': '/static/sprites/145.gif', 'kdr' : 'unknown'}
+            ]},
+            {'name': 'Jason', 'name_lower': 'jason', 'pokemon': [
+                {'name' : 'Salamence', 'src': '/static/sprites/373.gif', 'kdr' : 'unknown'},
+                {'name' : 'Garchomp', 'src': '/static/sprites/445-mega.gif', 'kdr' : 'unknown'},
+                {'name' : 'Hydreigon', 'src': '/static/sprites/635.gif', 'kdr' : 'unknown'},
+                {'name' : 'Goodra', 'src': '/static/sprites/706.gif', 'kdr' : 'unknown'},
+                {'name' : 'Altaria', 'src': '/static/sprites/334-mega.gif', 'kdr' : 'unknown'},
+                {'name' : 'Dragonite', 'src': '/static/sprites/149.gif', 'kdr' : 'unknown'},
+                {'name' : 'Dragalge', 'src': '/static/sprites/691.gif', 'kdr' : 'unknown'},
+                {'name' : 'Tyrantrum', 'src': '/static/sprites/697.gif', 'kdr' : 'unknown'},
+                {'name' : 'Kyurem-B', 'src': '/static/sprites/646-black.gif', 'kdr' : 'unknown'}
+            ]},
+            {'name': 'Chris', 'name_lower': 'chris', 'pokemon': [
+                {'name' : 'Absol', 'src': '/static/sprites/359-mega.gif', 'kdr' : 'unknown'},
+                {'name' : 'Umbreon', 'src': '/static/sprites/197.gif', 'kdr' : 'unknown'},
+                {'name' : 'Hydreigon', 'src': '/static/sprites/635.gif', 'kdr' : 'unknown'},
+                {'name' : 'Weavile', 'src': '/static/sprites/461.gif', 'kdr' : 'unknown'},
+                {'name' : 'Sableye', 'src': '/static/sprites/302-mega.gif', 'kdr' : 'unknown'},
+                {'name' : 'Mandibuzz', 'src': '/static/sprites/630.gif', 'kdr' : 'unknown'},
+                {'name' : 'Drapion', 'src': '/static/sprites/452.gif', 'kdr' : 'unknown'},
+                {'name' : 'Tyranitar', 'src': '/static/sprites/248.gif', 'kdr' : 'unknown'},
+                {'name' : 'Bisharp', 'src': '/static/sprites/625.gif', 'kdr' : 'unknown'}
+            ]},
+            {'name': 'Bops', 'name_lower': 'bops', 'pokemon': [
+                {'name' : 'Pinsir', 'src': '/static/sprites/127-mega.gif', 'kdr' : 'unknown'},
+                {'name' : 'Heracross', 'src': '/static/sprites/214-mega.gif', 'kdr' : 'unknown'},
+                {'name' : 'Volcarona', 'src': '/static/sprites/637.gif', 'kdr' : 'unknown'},
+                {'name' : 'Galvantula', 'src': '/static/sprites/596.gif', 'kdr' : 'unknown'},
+                {'name' : 'Armaldo', 'src': '/static/sprites/348.gif', 'kdr' : 'unknown'},
+                {'name' : 'Scolipede', 'src': '/static/sprites/545.gif', 'kdr' : 'unknown'},
+                {'name' : 'Scizor', 'src': '/static/sprites/212-mega.gif', 'kdr' : 'unknown'},
+                {'name' : 'Yanmega', 'src': '/static/sprites/469.gif', 'kdr' : 'unknown'},
+                {'name' : 'Crustle', 'src': '/static/sprites/558.gif', 'kdr' : 'unknown'}
+            ]},
+            {'name': 'Kevin', 'name_lower': 'kevin', 'pokemon': [
+                {'name' : 'Scrafty', 'src': '/static/sprites/560.gif', 'kdr' : 'unknown'},
+                {'name' : 'Medicham', 'src': '/static/sprites/308-mega.gif', 'kdr' : 'unknown'},
+                {'name' : 'Emboar', 'src': '/static/sprites/500.gif', 'kdr' : 'unknown'},
+                {'name' : 'Hawlucha', 'src': '/static/sprites/701.gif', 'kdr' : 'unknown'},
+                {'name' : 'Breloom', 'src': '/static/sprites/286.gif', 'kdr' : 'unknown'},
+                {'name' : 'Machamp', 'src': '/static/sprites/68.gif', 'kdr' : 'unknown'},
+                {'name' : 'Lucario', 'src': '/static/sprites/448.gif', 'kdr' : 'unknown'},
+                {'name' : 'Infernape', 'src': '/static/sprites/392.gif', 'kdr' : 'unknown'},
+                {'name' : 'Keldeo', 'src': '/static/sprites/647.gif', 'kdr' : 'unknown'}
+            ]},
+            {'name': 'Alex', 'name_lower': 'alex', 'pokemon': [
+                {'name' : 'Munchlax', 'src': '/static/sprites/446.gif', 'kdr' : 'unknown'},
+                {'name' : 'Dunsparce', 'src': '/static/sprites/206.gif', 'kdr' : 'unknown'},
+                {'name' : 'Audino', 'src': '/static/sprites/531.gif', 'kdr' : 'unknown'},
+                {'name' : 'Porygon-Z', 'src': '/static/sprites/474.gif', 'kdr' : 'unknown'},
+                {'name' : 'Tauros', 'src': '/static/sprites/128.gif', 'kdr' : 'unknown'},
+                {'name' : 'Minccino', 'src': '/static/sprites/572.gif', 'kdr' : 'unknown'},
+                {'name' : 'Kecleon', 'src': '/static/sprites/352.gif', 'kdr' : 'unknown'},
+                {'name' : 'Exploud', 'src': '/static/sprites/295.gif', 'kdr' : 'unknown'},
+                {'name' : 'Furfrou', 'src': '/static/sprites/676.gif', 'kdr' : 'unknown'}
+            ]},
+            {'name': 'Patrick', 'name_lower': 'patrick', 'pokemon': [
+                {'name' : 'Ludicolo', 'src': '/static/sprites/272.gif', 'kdr' : 'unknown'},
+                {'name' : 'Whimsicott', 'src': '/static/sprites/547.gif', 'kdr' : 'unknown'},
+                {'name' : 'Ferrothorn', 'src': '/static/sprites/598.gif', 'kdr' : 'unknown'},
+                {'name' : 'Serperior', 'src': '/static/sprites/497.gif', 'kdr' : 'unknown'},
+                {'name' : 'Breloom', 'src': '/static/sprites/286.gif', 'kdr' : 'unknown'},
+                {'name' : 'Leavanny', 'src': '/static/sprites/542.gif', 'kdr' : 'unknown'},
+                {'name' : 'Venusaur', 'src': '/static/sprites/3-mega.gif', 'kdr' : 'unknown'},
+                {'name' : 'Sceptile', 'src': '/static/sprites/254-mega.gif', 'kdr' : 'unknown'},
+                {'name' : 'Celebi', 'src': '/static/sprites/251.gif', 'kdr' : 'unknown'}
+            ]},
+        ]
 
+        output = setup.env.get_template("gym_leaders.html").render(gym_leaders=gym_leaders)
+        return output
+
+
+    @cherrypy.expose
+    def challenge_claire(self, input_name_claire=None, input_email_claire=None, input_team_claire=None, input_format_claire=None):
+        email_check = r'[^@]+@[^@]+\.[^@]+'
+        team_check = r'\w+, \w+, \w+, \w+, \w+, \w+'
+        if(input_name_claire == '' or input_email_claire == '' or input_team_claire == '' or input_format_claire == ''):
+            output = 'Form completed with missing fields, press back and complete the form'
+        elif (input_email_claire == re.search(email_check, input_email_claire)):
+            output = 'The email you have entered is invalid! Please try again'
+        elif (input_team_claire == re.search(team_check, input_team_claire)):
+            output = 'The team you typed is invalid. Please remember to add commas! Press back to edit your form'
+        else:
+            email = MIMEText('Hello Claire! You have received a challenge from ' + input_name_claire + '. They have requested a battle on ' + input_format_claire + ' using ' + input_team_claire + '. If you need to, you can contact your challenger here: ' + input_email_claire)
+            email['Subject'] = '[Challenge!]'
+            email['From'] = 'pokemonpres@gmail.com'
+            email['To'] = 'claire_koperwas@yahoo.com'#claire_koperwas@yahoo.com
+            s = smtplib.SMTP('mail.sjsupokemon.club')
+            s.login('admin@sjsupokemon.club', 'nick2693')
+            s.sendmail(input_email_claire, ['claire_koperwas@yahoo.com'], email.as_string())
+            s.quit()
+            input = {}
+            input['name'] = input_name_claire
+            input['email'] = input_email_claire
+            input['team'] = input_team_claire
+            input['format'] = input_format_claire
+            input['gym_leader'] = 'Claire'
+            input['gym_desc'] = 'You have challenged the Electric type gym leader, Claire!!!'
+            #with open('/static/gyms/challenges.txt', 'a') as save_file:
+            #    save_file.write(input['gym_leader'] + ' challenged by ' + input['name'] + ' on ' + input['format'] + ' with ' + input['team'])
+            output = setup.env.get_template("challenge.html").render(input=input)
+            return output
 
 class tournament():
 
